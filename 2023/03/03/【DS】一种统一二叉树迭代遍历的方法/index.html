@@ -16,23 +16,26 @@
   <meta name="author" content="MushroomLos">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MushroomWelcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHu">
+    <meta name="description" content="提示：本文章内的所有代码均基于C++实现。 二叉树作为一种具有递归定义的数据结构，天然适合用递归算法进行遍历。对于二叉树的前中后序遍历，递归有着非常简介的写法，这里不再赘述。 但是使用迭代方式时，常规的思路就无法做到统一，这里做一个简单的解释。  对于前序遍历，即(root, left, right)的遍历方式而言，可以使用一个栈来保存当前已经遍历的结点，在迭代过程中，只需要在root不为空时一直">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/03/03/hello-world/index.html">
+<meta property="og:title" content="【DS】一种统一二叉树迭代遍历的方法">
+<meta property="og:url" content="http://example.com/2023/03/03/%E3%80%90DS%E3%80%91%E4%B8%80%E7%A7%8D%E7%BB%9F%E4%B8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="MushroomWelcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHu">
+<meta property="og:description" content="提示：本文章内的所有代码均基于C++实现。 二叉树作为一种具有递归定义的数据结构，天然适合用递归算法进行遍历。对于二叉树的前中后序遍历，递归有着非常简介的写法，这里不再赘述。 但是使用迭代方式时，常规的思路就无法做到统一，这里做一个简单的解释。  对于前序遍历，即(root, left, right)的遍历方式而言，可以使用一个栈来保存当前已经遍历的结点，在迭代过程中，只需要在root不为空时一直">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-03T12:58:11.298Z">
-<meta property="article:modified_time" content="2023-03-03T13:53:23.293Z">
+<meta property="article:published_time" content="2023-03-03T14:18:50.000Z">
+<meta property="article:modified_time" content="2023-03-03T15:26:17.761Z">
 <meta property="article:author" content="MushroomLos">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="Stack">
+<meta property="article:tag" content="Tree">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hello World - Hexo</title>
+  <title>【DS】一种统一二叉树迭代遍历的方法 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="【DS】一种统一二叉树迭代遍历的方法"></span>
           
         </div>
 
@@ -209,7 +212,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-03 20:58" pubdate>
+        <time datetime="2023-03-03 22:18" pubdate>
           2023年3月3日 晚上
         </time>
       </span>
@@ -221,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          375 字
+          2.2k 字
         
       </span>
     
@@ -232,7 +235,7 @@
         
         
         
-          4 分钟
+          19 分钟
         
       </span>
     
@@ -278,24 +281,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">【DS】一种统一二叉树迭代遍历的方法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Mushroom<br>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+                <p><strong>提示</strong>：本文章内的所有代码均基于C++实现。</p>
+<p>二叉树作为一种具有递归定义的数据结构，天然适合用递归算法进行遍历。对于二叉树的前中后序遍历，递归有着非常简介的写法，这里不再赘述。</p>
+<p>但是使用迭代方式时，常规的思路就无法做到统一，这里做一个简单的解释。</p>
+<ul>
+<li>对于前序遍历，即(root, left, right)的遍历方式而言，可以使用一个栈来保存当前已经遍历的结点，在迭代过程中，只需要在root不为空时一直将root入栈并保存对应的root值，并迭代至其左子树即可；当root为空时，则将栈顶结点的右子树赋值给root并出栈即可。</li>
+<li>对于中序遍历，即(left, root, right)的遍历方式而言，与前序遍历基本一致，区别在于迭代root的过程中不保存root的值，而是直到root为空时才进行保存。</li>
+<li>对于后序遍历，即(left, right, root)的遍历方式而言，因为要输出一个root的值，必须保证其左右子树都被访问过了才能被输出，因此每一个结点都需要一个标志位标识其是否被访问过。常见的作法包括使用变量保存上一个被访问过的结点，或者通过自定义结构体来标识其是否被访问过。</li>
+</ul>
+<p>由此可以看出，常规的二叉树迭代法在写法上有着比较大的差异，在这里笔者提供一种统一的迭代方法，可以保证在较少修改的情况下实现三种迭代方式。</p>
+<p>这里选用的二叉树定义方式为Leetcode中的二叉树定义。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">treenode</span> &#123;<br>	<span class="hljs-type">int</span> val;<br>	treenode *left, *right;<br>	<span class="hljs-built_in">treenode</span>() : <span class="hljs-built_in">val</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>) &#123;&#125;<br>	<span class="hljs-built_in">treenode</span>(<span class="hljs-type">int</span> x) : <span class="hljs-built_in">val</span>(x), <span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>) &#123;&#125;<br>	<span class="hljs-built_in">treenode</span>(<span class="hljs-type">int</span> x, treenode *left, treenode *right) : <span class="hljs-built_in">val</span>(x), <span class="hljs-built_in">left</span>(left), <span class="hljs-built_in">right</span>(right) &#123;&#125;<br> &#125;;<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+<p>在此基础上，我们定义一个新的结构体Command，其中包含两个变量。</p>
+<ul>
+<li>s：字符串类型，包含两种可能。go表示朝着某一个结点行进；print表示打印当前结点的值。</li>
+<li>node：TreeNode指针，包含了一个二叉树结点。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Command</span>&#123;<br>    string s;        <span class="hljs-comment">// go, print</span><br>    TreeNode* node;<br>    <span class="hljs-built_in">Command</span>(string s, TreeNode* node) : <span class="hljs-built_in">s</span>(s), <span class="hljs-built_in">node</span>(node) &#123; &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
+<p>在迭代过程中，将使用Command作为栈中元素进行操作。<br>除了必要的边界判断外，下面以前序遍历为例，整体代码如下所示。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; res;<br>        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-keyword">return</span> res;<br><br>        stack&lt;Command&gt; stack;<br>        stack.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">Command</span>(<span class="hljs-string">&quot;go&quot;</span>, root));<br><br>        <span class="hljs-keyword">while</span>(!stack.<span class="hljs-built_in">empty</span>())&#123;<br>            Command command = stack.<span class="hljs-built_in">top</span>();<br>            stack.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-keyword">if</span>(command.s == <span class="hljs-string">&quot;print&quot;</span>)<br>                res.<span class="hljs-built_in">push_back</span>(command.node-&gt;val);<br>            <span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-built_in">assert</span>(command.s == <span class="hljs-string">&quot;go&quot;</span>);<br><br>                <span class="hljs-keyword">if</span>(command.node-&gt;right)<br>                    stack.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">Command</span>(<span class="hljs-string">&quot;go&quot;</span>, command.node-&gt;right));<br>                <span class="hljs-keyword">if</span>(command.node-&gt;left)<br>                    stack.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">Command</span>(<span class="hljs-string">&quot;go&quot;</span>, command.node-&gt;left));<br>                stack.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">Command</span>(<span class="hljs-string">&quot;print&quot;</span>), command.node);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>可以看到，这种处理方式的巧妙之处在于通过区分输出和迭代两种任务，实现了一种更贴近栈工作原理的方式。当遍历到一个Command变量时，会根据Command中s的不同执行不同的操作。<br>在起始的栈中仅包含了一个Command变量，其中包括了root和go指令，这样当遍历到它时，若右子树非空，则会创建一个新的Command并入栈，其中包含了root的右孩子和go指令，同理会创建对应的左孩子并入栈，当上述两种操作完成后，则再将打印自己的Command入栈。<br>这种做法的巧妙之处在于，它合理地模拟了栈地运行过程，在前序遍历中，右子树是最后被遍历地，因此对应到代码里，则它是被第一个访问的，因此整个过程为右子树入栈，左子树入栈，打印当前结点入栈。<br>同理，如果需要编写的是后续遍历，则只需要将print Command放在最前面即可，因为这样就满足了在栈底的元素最后被访问的特性，而原先的左右子树的遍历不会收到影响。</p>
+<p>综上，这是一种可以统一二叉树迭代遍历的方式，且相对于其它统一方法而言更为直观和容易记忆。</p>
 
                 
               </div>
@@ -304,6 +318,38 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Data-Structure/" class="category-chain-item">Data Structure</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-C/">#C/C++</a>
+      
+        <a href="/tags/Stack/">#Stack</a>
+      
+        <a href="/tags/Tree/">#Tree</a>
+      
+    </div>
   
 </div>
 
@@ -313,8 +359,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://example.com/2023/03/03/hello-world/</div>
+      <div>【DS】一种统一二叉树迭代遍历的方法</div>
+      <div>http://example.com/2023/03/03/【DS】一种统一二叉树迭代遍历的方法/</div>
     </div>
     <div class="license-meta">
       
@@ -358,15 +404,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/03/%E3%80%90DS%E3%80%91%E4%B8%80%E7%A7%8D%E7%BB%9F%E4%B8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/" title="【DS】一种统一二叉树迭代遍历的方法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【DS】一种统一二叉树迭代遍历的方法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/03/03/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
